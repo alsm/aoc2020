@@ -6,11 +6,11 @@ class Day1
     end
 
     def part1()
-        @input.combinations(2).select { |i| i.sum == 2020 }.[0].product
+        @input.combinations(2).select { |i| i.sum == 2020 }.first.product
     end
 
     def part2()
-        @input.combinations(3).select { |i| i.sum == 2020 }.[0].product
+        @input.combinations(3).select { |i| i.sum == 2020 }.first.product
     end
 
 end
