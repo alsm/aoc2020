@@ -10,7 +10,7 @@ class Day3
   end
 
   def part2(s : Array(Tuple(Int32, Int32)))
-    s.map{ |e| x, y = e; part1(x,y)}.product(1_i64)
+    s.map{ |(x,y)| part1(x,y)}.product(1_i64)
   end
 end
 
