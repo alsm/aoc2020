@@ -14,16 +14,15 @@ class Day4
   end
 
   def validate_number(v : String, lo : Int32, hi : Int32)
-    v.to_i? && v.to_i >= lo && v.to_i <= hi
+    v.to_i? && lo <= v.to_i <= hi
   end
 
   def validate_height(v : String)
-    h = /(\d+)(in|cm)/.match(v).try &.[1]
-    case t = /(\d+)(in|cm)/.match(v).try &.[2]
+    case t = v[-2, 2]
     when "cm"
-      h && h.to_i? && h.to_i >= 150 && h.to_i <= 193
+      validate_number(v.rstrip("cm"), 150, 193)
     when "in"
-      h && h.to_i? && h.to_i >= 59 && h.to_i <= 76
+      validate_number(v.rstrip("in"), 59, 76)
     else
       false
     end
@@ -35,7 +34,7 @@ class Day4
     @input.select{|e| e.size == 7}.select{|e|
       validate_number(e["byr"], 1920, 2002) && validate_number(e["iyr"], 2010, 2020) &&
       validate_number(e["eyr"], 2020, 2030) && validate_height(e["hgt"]) && 
-      e["hcl"].matches?(/#[a-z0-9]{6}/) && eyes.includes?(e["ecl"]) && e["pid"].match(/^\d{9}$/)
+      e["hcl"].matches?(/#[a-f0-9]{6}/) && eyes.includes?(e["ecl"]) && e["pid"].match(/^\d{9}$/)
     }.size
   end
 end
