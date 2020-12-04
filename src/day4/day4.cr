@@ -5,12 +5,12 @@ class Day4
       .chunk {|l| l == ""}
       .map{|(t, l)| l.join(" ")}
       .select{|l| !l.empty?}
-      .map{|l| i = Hash(String, String).new; l.split(" ").each {|e| k,v = e.split(":"); i[k]=v}; i}
+      .map{|l| i = Hash(String, String).new; l.split(" ").each {|e| k,v = e.split(":"); i[k]=v}; i.delete("cid"); i}
       .each{|e| @input << e}
   end
 
   def part1
-    @input.count{|e| e.size == 8 || (e.size == 7 && !e.has_key?("cid"))}
+    @input.count{|e| e.size == 7}
   end
 
   def validate_number(v : String, lo : Int32, hi : Int32)
@@ -32,7 +32,7 @@ class Day4
   def part2
     eyes = Set{"amb", "blu", "brn", "gry", "grn", "hzl", "oth"}
     keys = Set{"byr","iyr","eyr","hgt","hcl","ecl","pid"}
-    @input.map!{|e| e.delete("cid"); e}.select{|e| e.size == 7}.select{|e|
+    @input.select{|e| e.size == 7}.select{|e|
       validate_number(e["byr"], 1920, 2002) && validate_number(e["iyr"], 2010, 2020) &&
       validate_number(e["eyr"], 2020, 2030) && validate_height(e["hgt"]) && 
       e["hcl"].matches?(/#[a-z0-9]{6}/) && eyes.includes?(e["ecl"]) && e["pid"].match(/^\d{9}$/)
