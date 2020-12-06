@@ -8,11 +8,11 @@ class Day6
   end
 
   def part1
-    @input.map{|q| q.join("").chars.uniq.size}.sum
+    @input.map{|q| q.join.chars.uniq.size}.sum
   end
 
   def part2
-    @input.map{|q| q.map{|e| e.chars}.reduce{|s,o| s &= o}.size}.sum
+    @input.map{|q| q.map(&.chars).reduce{|s,o| s&o}.size}.sum
   end
 end
 
