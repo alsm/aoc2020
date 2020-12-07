@@ -2,12 +2,11 @@ class Day7
   @input = Hash(String, Hash(String, Int32)).new
   def initialize(f : String)
     File.read_lines(f).each do |l|
-      holds, bags = l.split(" contain ")
-      holds = holds.rstrip("bags").strip
+      holds, bags = l.sub(/ (bags|bag)/, "").split(" contain ")
       @input[holds] = Hash(String, Int32).new if !@input.has_key?(holds)
       bags.split(", ").each do |b|
-        if m = /((\d) (\w+\s\w+))+/.match(b)
-          @input[holds][m[3]] = m[2].to_i
+        if m = /(\d) (\w+\s\w+)/.match(b)
+          @input[holds][m[2]] = m[1].to_i
         end
       end
     end
