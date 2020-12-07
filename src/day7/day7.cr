@@ -12,19 +12,12 @@ class Day7
     end
   end
 
+  def find(b : String, c : String)
+    @input[c].reduce(false){|acc, (k,v)| acc ||= (k == b || find(b, k))}
+  end
+
   def part1
-    bags = Set(String).new
-    list = Deque.new(["shiny gold"])
-    while !list.empty?
-      bag = list.shift
-      @input.each do |k,v|
-        if v.has_key?(bag)
-          bags << k
-          list.push(k)
-        end
-      end
-    end
-    bags.size
+    @input.map{|k,v| find("shiny gold", k) ? 1 : 0 }.sum
   end
 
   def number_contains(b : String, n : Int32)
