@@ -3,8 +3,8 @@ class Day11
 
   class Grid
     @floor : Hash(Tuple(Int32,Int32), Char)
-    property width : Int32
-    property height : Int32
+    @width : Int32
+    @height : Int32
 
     def initialize(@floor : Hash(Tuple(Int32,Int32), Char), @occupied : Int32, @alt : Bool)
       @width = @floor.keys.map{|x,y| x}.max
@@ -47,14 +47,9 @@ class Day11
     end
 
     def transform(l : Tuple(Int32, Int32))
-      case @floor[l]
-      when '.'
-        '.'
-      when 'L'
-        neighbours(l).select{|s| is_occupied(s)}.size > 0 ? 'L' : '#'
-      when '#'
-        neighbours(l).select{|s| is_occupied(s)}.size >= @occupied ? 'L' : '#'
-      end
+      {'.' => '.',
+       'L' => neighbours(l).select{|s| is_occupied(s)}.size > 0 ? 'L' : '#',
+       '#' => neighbours(l).select{|s| is_occupied(s)}.size >= @occupied ? 'L' : '#'}[@floor[l]]
     end
 
     def iterate
@@ -69,10 +64,6 @@ class Day11
         return @floor.values.select{|s| s == '#'}.size if @floor.values == new_floor.values
         @floor = new_floor
       end
-    end
-
-    def to_s
-      @floor.values.in_groups_of(@width+1).map{|l| l.join}
     end
   end
 
