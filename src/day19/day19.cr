@@ -23,14 +23,7 @@ class Day19
   def part2
     @rules["8"] = "42+"
     @rules["11"] = "(?<a>42 \\g<a>* 31)"
-    r0 = "^#{@rules["0"]}$"
-    while true
-      rn = r0.scan /\d+/
-      break if rn.size.zero?
-      rn.each {|n| r0 = r0.gsub(/\b#{n[0]}\b/, "(#{@rules[n[0]]})") }
-    end
-    r0 = r0.gsub(" ", "")
-    @msgs.select{|m| Regex.new(r0).matches?(m)}.size
+    part1
   end
 end
 
