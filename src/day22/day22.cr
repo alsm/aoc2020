@@ -44,4 +44,5 @@
   end
 
   d = Day22.new("day22.txt")
+  pp d.part1
   pp d.part2
